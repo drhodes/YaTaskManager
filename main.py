@@ -1,9 +1,5 @@
 import calendar
-
-
-class Task:
-    def __init__(self):
-        pass
+    
 
 class TaskManager:
     """
