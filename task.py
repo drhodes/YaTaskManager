@@ -18,6 +18,9 @@ class Task:
         # self.priority = 0
         self.setup()
 
+    def set_duration(self, dur):
+        self.duration = dur
+        
     def setup(self):
         "manage the monotonically increasing task id"
         self.task_id = self._TASK_ID_
@@ -31,4 +34,7 @@ class Task:
         return response in ["y", "yes", ""]
         
     def __repr__(self):
-        return self.description
+        if self.duration == None:
+            return self.description
+        else:
+            return f"{self.description} ({self.duration})"

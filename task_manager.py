@@ -24,3 +24,10 @@ class TaskManager:
     def show_all_tasks(self):
         for n, t in enumerate(self.tasks):
             print(f"({n}):  {t}")
+
+    def set_duration(self, idx, duration):
+        try:
+            self.tasks[idx].set_duration(duration)
+        except IndexError:
+            print(f"there is no task with that number: {idx}")        
+            
