@@ -3,7 +3,7 @@ build: ## build
 	echo build
 
 test: ## test
-	echo test
+	python -m pytest --disable-warnings ##test_taskheap.py 
 
 clean: ## clean all the things
 	echo implement clean makefile rule

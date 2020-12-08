@@ -15,21 +15,20 @@ class CommandI:
 
 class TaskAdd(CommandI):
     def name(self):
-        return "taskadd"
+        return "+"
     def run(self, task_mgr):
-        print("task description (enter nothing to skip)")
-        task_desc = input(">>").strip()
+        print(" enter task description (enter nothing to skip)")
+        task_desc = input(">> ").strip()
         if task_desc == "":
             pass
         else:
             task_mgr.add_task(task_desc)
 
-
 #class EstimateDuration(CommandI)
 
 class TaskList(CommandI):
     def name(self):
-        return "tasklist"
+        return "ls"
     def run(self, task_mgr):
         task_mgr.show_all_tasks()
     
@@ -41,7 +40,7 @@ class TaskAddRandom(CommandI):
         print("how many random tasks to add?")
         num_tasks = input(">> ")
         for _ in range(int(num_tasks)):
-            task_mgr.add_task(task.Task(lorem.sentence()))
+            task_mgr.add_task(lorem.sentence())
 
 class Commander:
     def __init__(self):
