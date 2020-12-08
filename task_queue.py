@@ -24,6 +24,12 @@ class TaskQueue:
     def __iter__(self):
         return iter(self.tasks)
 
+    def remove(self, idx):
+        if idx < len(self.tasks):            
+            self.tasks.pop(idx)
+        else:
+            print("ERROR: Could not remove task: {idx}, it does not exist.")
+    
     def __getitem__(self, idx):
         return self.tasks[idx]
         

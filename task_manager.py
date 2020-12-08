@@ -20,6 +20,9 @@ class TaskManager:
         print(f"adding task: {task_desc}")
         t = Task(task_desc)
         self.tasks.insert(t)
+
+    def remove_task(self, idx):
+        self.tasks.remove(idx)
         
     def show_all_tasks(self):
         for n, t in enumerate(self.tasks):

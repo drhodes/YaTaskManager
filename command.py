@@ -15,7 +15,7 @@ class CommandI:
 
 class TaskAdd(CommandI):
     def name(self):
-        return "+"
+        return "add"
     def run(self, task_mgr):
         print(" enter task description (enter nothing to skip)")
         task_desc = input(">> ").strip()
@@ -39,7 +39,7 @@ class EstimateDuration(CommandI):
         except Exception as e:
             print(f"Sorry, couldn't handle task_number: {e}")
             
-        task_mgr.set_duration(int(task_number), duration)
+        task_mgr.set_duration(task_number, duration)
 
 class TaskList(CommandI):
     def name(self):
@@ -57,6 +57,24 @@ class TaskAddRandom(CommandI):
         for _ in range(int(num_tasks)):
             task_mgr.add_task(lorem.sentence())
 
+class RemoveTask(CommandI):
+    def name(self):
+        return "rm"
+
+    def run(self, task_mgr):
+        print("which task to remove? (enter task number)?")
+        task_num = input(">> ")
+        try:
+            task_num = int(task_num)
+        except ValueError as e:
+            print(f"Sorry, couldn't parse task_number: {e}")            
+            print("task not removed")
+        print(f"removing task: {task_num}")
+        task_mgr.remove_task(task_num)
+
+
+        
+        
 class Commander:
     def __init__(self):
         self.commands = {}
@@ -68,6 +86,7 @@ class Commander:
             TaskAddRandom(),
             TaskList(),
             EstimateDuration(),
+            RemoveTask(),
         ]
         for cmd in cmdlist:
             self.commands[cmd.name()] = cmd
