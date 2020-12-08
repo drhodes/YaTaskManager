@@ -5,8 +5,12 @@ class TaskManager:
     """
     task manager with priority queue
     """
+    
     def __init__(self):
         self.tasks = task_queue.TaskQueue()
+        
+    def load_from_disk(self):
+        pass
         
     def run(self, cmd):
         print(f"TaskManager is doing {cmd}")
