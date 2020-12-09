@@ -33,4 +33,7 @@ class TaskQueue:
     
     def __getitem__(self, idx):
         return self.tasks[idx]
+    
+    def __setitem__(self, idx, val):
+        self.tasks[idx] = val
         

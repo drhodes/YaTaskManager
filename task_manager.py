@@ -18,7 +18,13 @@ class TaskManager:
         
     def pickle_path(self):
         return pathlib.Path.home() / ".yatama.pickle"
-        
+
+    def to_csv(self):
+        lines = []
+        for t in self.tasks:
+            lines.append(", ".join(t.to_csv()))
+        return lines
+    
     def load_from_disk(self):
         try:
             self.tasks, self.finished_tasks = pickle.load(open(self.pickle_path(),'rb'))
@@ -42,6 +48,9 @@ class TaskManager:
         t = Task(task_desc) 
         self.tasks.insert(t)
 
+    def swap(self, idx1, idx2):
+        self.tasks[idx1], self.tasks[idx2] = self.tasks[idx2], self.tasks[idx1]
+        
     def remove_task(self, idx):
         return self.tasks.remove(idx)
 

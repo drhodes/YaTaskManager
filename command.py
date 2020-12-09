@@ -119,6 +119,25 @@ class TagTask(CommandI):
         tag = input(">> ").strip()
         task.add_tag(tag)
 
+class ToCSV(CommandI):
+    def name(self): return "csv"
+    def desc(self): return "output tasks as CSV format"
+
+    def run(self, task_mgr):
+        for line in task_mgr.to_csv():
+            print(line)
+
+class Swap(CommandI):
+    def name(self): return "swap"
+    def desc(self): return "swap the priority of two tasks"
+
+    def run(self, task_mgr):
+        try:
+            tasknum1 = get_task_number()
+            tasknum2 = get_task_number()
+            task_mgr.swap(tasknum1, tasknum2)
+        except ValueError:
+            print("Couldn't swap tasks")
 
 # ----------------------------------------------------------------------------------------
 

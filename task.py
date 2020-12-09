@@ -26,7 +26,13 @@ class Task:
         print(f"Do ({str(self)}) before ({str(task)})? ([y]/n)")
         response = input(">> ").strip().lower()
         return response in ["y", "yes", ""]
-        
+
+    def to_csv(self):
+        return (str(self.description),
+                str(self.created),
+                str(self.duration),
+                "/".join(self.tags))
+    
     def __repr__(self):
         s = self.description
         if self.duration != None:
