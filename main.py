@@ -8,5 +8,5 @@ def main():
     repl.REPL().loop()
     
 if __name__ == "__main__":
-    print("building agenda!")
+    print("Welcome to yet another task manager!")
     main()

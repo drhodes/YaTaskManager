@@ -1,9 +1,11 @@
 from task_manager import TaskManager
 from command import Commander
 from err import *
+import humorous
 import signal
 import random
 import sys
+
 
 class REPL:
     """Read Eval Print Loop"""
@@ -15,15 +17,10 @@ class REPL:
         
     def setup_signal_handlers(self):
         # handle quits to ensure db is intact.
-        humorous_messages = [
-            "Don't be a slacker!",
-            "Your Revolution is Over, Lebowski! Condolences! The Bums Lost!",
-            "To infinity and beyond!",
-        ]
         
         def quit(*args):
             print("\n\n")
-            print(random.choice(humorous_messages))
+            print(random.choice(humorous.messages))
             print("todo: save state")
             print("")
             sys.exit(0)
