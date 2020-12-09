@@ -4,7 +4,7 @@ messages = [
     "The early bird gets the worm",
     "There's only two options: make progress or make excuses",
     "If you find yourself in a hole, stop digging",
-    "There cannot be a crisis next week, my schedule is already full."
+    "There cannot be a crisis next week, my schedule is already full.",
 ]
 
 def parting_message():

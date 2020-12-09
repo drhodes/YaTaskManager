@@ -6,7 +6,6 @@ import signal
 import random
 import sys
 
-
 class REPL:
     """Read Eval Print Loop"""
     def __init__(self):
@@ -34,13 +33,6 @@ class REPL:
             try:
                 cmd = input(">> ")
                 self.cmdr.run(cmd, self.tmgr)
+                print()
             except UnknownCommand as e:
                 print(f"!! {e}")
-        
-    def writeln(self, txt):
-        # maybe keep a history.
-        print(txt)
-    
-    def intro(self):
-        pass
-    

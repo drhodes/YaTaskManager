@@ -16,18 +16,18 @@ class TaskManager:
         self.finished_tasks = []
         self.load_from_disk()
         
-    def pickle_file(self):
+    def pickle_path(self):
         return pathlib.Path.home() / ".yatama.pickle"
         
     def load_from_disk(self):
         try:
-            self.tasks, self.finished_tasks = pickle.load(open(self.pickle_file(),'rb'))
+            self.tasks, self.finished_tasks = pickle.load(open(self.pickle_path(),'rb'))
         except FileNotFoundError as e:
             pass # ok, first run.
         
     def save_to_disk(self):
         obj = (self.tasks, self.finished_tasks)
-        pickle.dump(obj, open(self.pickle_file(), 'wb'))
+        pickle.dump(obj, open(self.pickle_path(), 'wb'))
         
     def run(self, cmd):
         print(f"TaskManager is doing {cmd}")
