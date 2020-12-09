@@ -9,7 +9,7 @@ from err import *
 class CommandI:
     def name(self): raise Exception("Unimplemented")
     def desc(self): raise Exception(self.__class__.__name__ + " needs to implement method desc()")
-    def run(self): raise Exception("Unimplemented")    
+    def run(self): raise Exception("Unimplemented")
 
 # ----------------------------------------------------------------------------------------
 def get_task_number():
@@ -26,7 +26,7 @@ def get_task_number():
 class TaskAdd(CommandI):
     def name(self): return "add"
     def desc(self): return "add a task to the queue"
-    
+
     def run(self, task_mgr):
         print(" enter task description (enter nothing to skip)")
         task_desc = input(">> ").strip()
@@ -53,10 +53,10 @@ class EstimateDuration(CommandI):
 class TaskList(CommandI):
     def name(self): return "ls"
     def desc(self): return "list all tasks"
-    
+
     def run(self, task_mgr):
         task_mgr.show_all_tasks()
-    
+
 class TaskAddRandom(CommandI):
     def name(self): return "add random tasks"
     def desc(self): return "a command for testing this program, safe to ignore"
@@ -70,7 +70,7 @@ class TaskAddRandom(CommandI):
 class RemoveTask(CommandI):
     def name(self): return "rm"
     def desc(self): return "remove a task from the queue"
-    
+
     def run(self, task_mgr):
         print(self.desc())
         try:
@@ -78,7 +78,7 @@ class RemoveTask(CommandI):
             print(f"removing task: {task_num}")
             task_mgr.remove_task(task_num)
         except ValueError as e:
-            print(f"Sorry, couldn't parse task_number: {e}")            
+            print(f"Sorry, couldn't parse task_number: {e}")
             print("task not removed")
 
 class Quit(CommandI):
@@ -88,7 +88,7 @@ class Quit(CommandI):
     def run(self, task_mgr):
         task_mgr.quit()
 
-        
+
 class FinishTask(CommandI):
     def name(self): return "fin"
     def desc(self): return "finish a task an remove it from the queue"
@@ -99,9 +99,9 @@ class FinishTask(CommandI):
         task_mgr.finish_task(task_num)
 
 class ReprioritizeTask(CommandI):
-    def name(self): return "rt"
+    def name(self): return "ch"
     def desc(self): return "change the priority of a task"
-    
+
     def run(self, task_mgr):
         task_num = get_task_number()
         task = task_mgr.remove_task(task_num)
@@ -111,7 +111,6 @@ class TagTask(CommandI):
     def name(self): return "tag"
     def desc(self): return "add a tag to a task"
 
-    
     def run(self, task_mgr):
         task_num = get_task_number()
         task = task_mgr.get_task(task_num)
@@ -134,18 +133,22 @@ class Commander:
             TaskAddRandom(),
             TaskList(),
             EstimateDuration(),
-            RemoveTask(),
-            Quit(),
             FinishTask(),
+            RemoveTask(),
             ReprioritizeTask(),
+            Swap(),
             TagTask(),
+            ToCSV(),
+            Quit(),
         ]
         for cmd in cmdlist:
             self.commands[cmd.name()] = cmd
 
     def run(self, txt, task_mgr):
+        """Match text cmd with CommandI and run"""
+        
         txt=txt.strip()
-        if txt in ["h", "?"]:
+        if txt in ["h", "?", "help"]:
             self.show_help()
         elif txt in self.commands:
             self.commands[txt].run(task_mgr)
