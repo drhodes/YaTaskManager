@@ -21,7 +21,7 @@ class Task:
 
     def add_tag(self, tag):
         self.tags.add(tag)
-        
+
     def has_priority_over(self, task):
         print(f"Do ({str(self)}) before ({str(task)})? ([y]/n)")
         response = input(">> ").strip().lower()
@@ -29,10 +29,10 @@ class Task:
 
     def to_csv(self):
         return (str(self.description),
-                str(self.created),
+                str(int(self.created.timestamp())),
                 str(self.duration),
                 "/".join(self.tags))
-    
+
     def __repr__(self):
         s = self.description
         if self.duration != None:

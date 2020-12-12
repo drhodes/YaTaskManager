@@ -1,9 +1,10 @@
 import task_queue
 import pathlib
+import err
 
 from task import Task
 import humorous
-import sys
+import sys, os
 import pickle
 
 class TaskManager:
@@ -15,10 +16,14 @@ class TaskManager:
         self.tasks = task_queue.TaskQueue()
         self.finished_tasks = []
         self.load_from_disk()
+        self.lock = None
         
     def pickle_path(self):
         return pathlib.Path.home() / ".yatama.pickle"
 
+    def lockfile_path(self):
+        return pathlib.Path.home() / ".yatama.pickle.lock"
+    
     def to_csv(self):
         lines = []
         for t in self.tasks:
@@ -39,20 +44,26 @@ class TaskManager:
         print(f"TaskManager is doing {cmd}")
         return True
     
-    def add_task(self, task_desc):
+    def add_task(self, description):
         # do not allow procrastination of determining task priority.
         # if a task is added, then the user must determine its
         # priority immediately.
                 
-        print(f"adding task: {task_desc}")
-        t = Task(task_desc) 
+        print(f"adding task: {description}")
+        t = Task(description)
         self.tasks.insert(t)
 
+    def add_full_task(self, task):
+        self.tasks.insert(task)
+        
     def swap(self, idx1, idx2):
         self.tasks[idx1], self.tasks[idx2] = self.tasks[idx2], self.tasks[idx1]
         
     def remove_task(self, idx):
         return self.tasks.remove(idx)
+    
+    def remove_finished_task(self, idx):
+        return self.finished_tasks.pop(idx)
 
     def get_task(self, idx):
         return self.tasks[idx]
@@ -61,6 +72,10 @@ class TaskManager:
         for n, t in enumerate(self.tasks):
             print(f"({n}):  {t}")
 
+    def show_all_finished_tasks(self):
+        for n, t in enumerate(self.finished_tasks):
+            print(f"({n}):  {t}")
+            
     def finish_task(self, idx):
         task = self.remove_task(idx)
         self.finished_tasks.append(task)

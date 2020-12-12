@@ -4,17 +4,31 @@ Commander
 intepret user input as modular commands.
 """
 import lorem
-from err import *
+from err import unimplemented, UnknownCommand
 
 class CommandI:
-    def name(self): raise Exception("Unimplemented")
-    def desc(self): raise Exception(self.__class__.__name__ + " needs to implement method desc()")
-    def run(self): raise Exception("Unimplemented")
+    def name(self):
+        """the name of the command"""
+        unimplemented(self)
+        
+    def desc(self):
+        """a description of the command"""
+        unimplemented(self)
+        
+    def run(self):
+        """run the command on the task manager"""
+        unimplemented(self)
+    
+# ------------------------------------------------------------------
+def get_input():
+    return input(">> ").strip()
 
-# ----------------------------------------------------------------------------------------
+def ask(msg):
+    print(" ", msg)
+    return get_input()
+
 def get_task_number():
-    print("enter task number")
-    task_num = input(">> ")
+    task_num = ask("enter task number")
     try:
         task_num = int(task_num)
     except ValueError as e:
@@ -22,17 +36,18 @@ def get_task_number():
         raise e
     return task_num
 
+# ------------------------------------------------------------------
+# These are the commands available to users.
 
 class TaskAdd(CommandI):
     def name(self): return "add"
     def desc(self): return "add a task to the queue"
 
     def run(self, task_mgr):
-        print(" enter task description (enter nothing to skip)")
-        task_desc = input(">> ").strip()
+        task_desc = ask("enter task description (enter nothing to skip)")
         if task_desc == "":
             pass
-        else:
+        else:            
             task_mgr.add_task(task_desc)
 
 class EstimateDuration(CommandI):
@@ -43,9 +58,8 @@ class EstimateDuration(CommandI):
         print(self.desc())
         try:
             task_number = get_task_number()
-            print(" What is your estimate for task duration?")
-            print(" formatting is 10m for 10 minutes, 3h for 3 hours, 4d for 4 day, 5w, 6m, 7y...")
-            duration = input(">> ").strip()
+            print(" What is your estimate for task duration?")            
+            duration = ask(" formatting is 10m for 10 minutes, 3h, 4d, 5w, 6m, 7y...")
             task_mgr.set_duration(task_number, duration)
         except ValueError as e:
             print(f"could not set the estimate duration")
@@ -62,8 +76,7 @@ class TaskAddRandom(CommandI):
     def desc(self): return "a command for testing this program, safe to ignore"
 
     def run(self, task_mgr):
-        print("how many random tasks to add?")
-        num_tasks = input(">> ")
+        num_tasks = ask("how many random tasks to add?")
         for _ in range(int(num_tasks)):
             task_mgr.add_task(lorem.sentence())
 
@@ -107,6 +120,22 @@ class ReprioritizeTask(CommandI):
         task = task_mgr.remove_task(task_num)
         task_mgr.add_task(task.description)
 
+class ListFinishedTasks(CommandI):
+    def name(self): return "lsf"
+    def desc(self): return "list finished tasks"
+    def run(self, task_mgr):
+        task_mgr.show_all_finished_tasks()
+        
+class Ressurect(CommandI):
+    def name(self): return "res"
+    def desc(self): return "resurrect a task and put it back on the queue"
+
+    def run(self, task_mgr):
+        task_mgr.show_all_finished_tasks()
+        task_num = get_task_number()
+        task = task_mgr.remove_finished_task(task_num)
+        task_mgr.add_full_task(task)
+        
 class TagTask(CommandI):
     def name(self): return "tag"
     def desc(self): return "add a tag to a task"
@@ -114,9 +143,7 @@ class TagTask(CommandI):
     def run(self, task_mgr):
         task_num = get_task_number()
         task = task_mgr.get_task(task_num)
-
-        print(f"enter the tag for {task}")
-        tag = input(">> ").strip()
+        tag = ask(f"enter the tag for {task}")
         task.add_tag(tag)
 
 class ToCSV(CommandI):
@@ -139,8 +166,7 @@ class Swap(CommandI):
         except ValueError:
             print("Couldn't swap tasks")
 
-# ----------------------------------------------------------------------------------------
-
+# ------------------------------------------------------------------
 class Commander:
     def __init__(self):
         self.commands = {}
@@ -153,8 +179,10 @@ class Commander:
             TaskList(),
             EstimateDuration(),
             FinishTask(),
+            ListFinishedTasks(),
             RemoveTask(),
             ReprioritizeTask(),
+            Ressurect(),
             Swap(),
             TagTask(),
             ToCSV(),
@@ -164,8 +192,9 @@ class Commander:
             self.commands[cmd.name()] = cmd
 
     def run(self, txt, task_mgr):
-        """Match text cmd with CommandI and run"""
-        
+        """
+        Dispatch a text command
+        """        
         txt=txt.strip()
         if txt in ["h", "?", "help"]:
             self.show_help()
