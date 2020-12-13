@@ -37,7 +37,7 @@ def get_task_number():
     return task_num
 
 # ------------------------------------------------------------------
-# These are the commands available to users.
+# These are the commands available to users. 
 
 class TaskAdd(CommandI):
     def name(self): return "add"

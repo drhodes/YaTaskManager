@@ -1,0 +1,6 @@
+
+
+* Cooperating Priority Queues.
+- two or more users cooperating on tasks.
+- ok, task locking.
+- use ideas from concurrency on coordinating human processes.
