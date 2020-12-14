@@ -39,7 +39,7 @@ class TaskManager:
     def save_to_disk(self):
         obj = (self.tasks, self.finished_tasks)
         pickle.dump(obj, open(self.pickle_path(), 'wb'))
-        
+
     def run(self, cmd):
         print(f"TaskManager is doing {cmd}")
         return True
@@ -78,6 +78,11 @@ class TaskManager:
     def show_all_finished_tasks(self):
         for n, t in enumerate(self.finished_tasks):
             print(f"({n}):  {t}")
+            
+    def list_tasks_with_tag(self, tag):
+        for n, t in enumerate(self.tasks):
+            if tag in t.tags:
+                print(f"({n}):  {t}")
             
     def finish_task(self, idx):
         task = self.remove_task(idx)

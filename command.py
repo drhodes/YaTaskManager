@@ -114,7 +114,17 @@ class Quit(CommandI):
     def run(self, task_mgr):
         task_mgr.quit()
 
+class ListTag(CommandI):
+    def name(self): return "lst"
+    def desc(self): return "list tasks with a given tag"
 
+    def run(self, task_mgr):
+        try:
+            tag = ask("enter tag")
+            task_mgr.list_tasks_with_tag(tag)
+        except ValueError as e:
+            print(f"Couldn't list tasks with tag because: {e}")            
+        
 class FinishTask(CommandI):
     def name(self): return "fin"
     def desc(self): return "finish a task an remove it from the queue"
@@ -193,6 +203,7 @@ class Commander:
             EstimateDuration(),
             FinishTask(),
             ListFinishedTasks(),
+            ListTag(),
             RemoveTask(),
             RenameTask(),
             ReprioritizeTask(),
