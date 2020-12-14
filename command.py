@@ -94,6 +94,19 @@ class RemoveTask(CommandI):
             print(f"Sorry, couldn't parse task_number: {e}")
             print("task not removed")
 
+class RenameTask(CommandI):
+    def name(self): return "rename"
+    def desc(self): return "change the description of a task"
+
+    def run(self, task_mgr):
+        try:
+            task_num = get_task_number()
+            new_desc = ask("enter the new description")
+            task_mgr.set_task_description(task_num, new_desc)
+        except ValueError as e:
+            print(f"Sorry, couldn't parse task_number: {e}")
+            print("task not renamed")
+            
 class Quit(CommandI):
     def name(self): return "q"
     def desc(self): return "quit yatama"
@@ -181,6 +194,7 @@ class Commander:
             FinishTask(),
             ListFinishedTasks(),
             RemoveTask(),
+            RenameTask(),
             ReprioritizeTask(),
             Ressurect(),
             Swap(),

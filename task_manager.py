@@ -53,6 +53,9 @@ class TaskManager:
         t = Task(description)
         self.tasks.insert(t)
 
+    def set_task_description(self, task_num, new_desc):
+        self.tasks[task_num].set_description(new_desc)
+        
     def add_full_task(self, task):
         self.tasks.insert(task)
         

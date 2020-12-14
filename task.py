@@ -19,6 +19,9 @@ class Task:
     def set_duration(self, dur):
         self.duration = dur
 
+    def set_description(self, desc):
+        self.description = desc
+        
     def add_tag(self, tag):
         self.tags.add(tag)
 
