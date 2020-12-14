@@ -5,6 +5,7 @@ import humorous
 import signal
 import random
 import sys
+import datetime
 
 class REPL:
     """Read Eval Print Loop"""
@@ -31,6 +32,8 @@ class REPL:
     def loop(self):
         while 1:
             try:
+                now = datetime.datetime.now()
+                print(f"{now.month}/{now.day}, {now.hour}:{now.minute}")
                 cmd = input(">> ")
                 self.cmdr.run(cmd, self.tmgr)
                 print()

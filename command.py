@@ -21,7 +21,7 @@ class CommandI:
     
 # ------------------------------------------------------------------
 def get_input():
-    return input(">> ").strip()
+    return input(f">> ").strip()
 
 def ask(msg):
     print(" ", msg)
@@ -157,7 +157,7 @@ class TagTask(CommandI):
         task_num = get_task_number()
         task = task_mgr.get_task(task_num)
         tag = ask(f"enter the tag for {task}")
-        task.add_tag(tag)
+        if tag: task.add_tag(tag)
 
 class ToCSV(CommandI):
     def name(self): return "csv"

@@ -1,15 +1,14 @@
 """
 docstring
 """
-
 import datetime
 
 class Task:
     """A task is a unit of human work!"""
-    
+
     def __init__(self, description):
-        # should tasks have a lifetime?
-        assert(type(description) == str)
+        # should tasks have a lifetime? 
+        assert type(description) == str
         self.description = description
         self.created = datetime.datetime.now()
         self.subtasks = None # think about this.
@@ -21,7 +20,7 @@ class Task:
 
     def set_description(self, desc):
         self.description = desc
-        
+       
     def add_tag(self, tag):
         self.tags.add(tag)
 
