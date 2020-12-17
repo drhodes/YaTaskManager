@@ -46,11 +46,9 @@ class TaskAdd(CommandI):
 
     def run(self, task_mgr):
         task_desc = ask("enter task description (enter nothing to skip)")
-        if task_desc == "":
-            pass
-        else:            
+        if task_desc:
             task_mgr.add_task(task_desc)
-
+            
 class EstimateDuration(CommandI):
     def name(self): return "est"
     def desc(self): return "estimate the duration of a task"
