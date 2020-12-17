@@ -130,9 +130,12 @@ class FinishTask(CommandI):
     def desc(self): return "finish a task an remove it from the queue"
 
     def run(self, task_mgr):
-        task_num = get_task_number()
-        print(f"finishing task: {task_num}")
-        task_mgr.finish_task(task_num)
+        try:
+            task_num = get_task_number()
+            print(f"finishing task: {task_num}")
+            task_mgr.finish_task(task_num)
+        except ValueError as e:
+            print(f"Couldn't finish task because: {e}")            
 
 class ReprioritizeTask(CommandI):
     def name(self): return "ch"
