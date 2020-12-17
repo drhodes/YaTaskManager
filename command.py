@@ -4,6 +4,7 @@ Commander
 intepret user input as modular commands.
 """
 import lorem
+import tk_cal
 from err import unimplemented, UnknownCommand
 
 class CommandI:
@@ -64,6 +65,22 @@ class EstimateDuration(CommandI):
         except ValueError as e:
             print(f"could not set the estimate duration")
 
+class AddDeadline(CommandI):
+    def name(self): return "dl"
+    def desc(self): return "set a deadline for a task"
+
+    def run(self, task_mgr):
+        try:
+            # task_mgr.add_deadline_property()
+            task_number = get_task_number()
+            date = tk_cal.get_date()
+            if date:
+                task_mgr.set_task_deadline(task_number, date)
+            else:
+                print(f"Date not found, got: {date} instead")
+        except ValueError as e:
+            print(f"Couldn't set a deadline: {e}")
+            
 class TaskList(CommandI):
     def name(self): return "ls"
     def desc(self): return "list all tasks"
@@ -215,6 +232,7 @@ class Commander:
             TagTask(),
             ToCSV(),
             Quit(),
+            AddDeadline(),
         ]
         for cmd in cmdlist:
             self.commands[cmd.name()] = cmd

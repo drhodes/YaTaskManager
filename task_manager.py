@@ -48,13 +48,22 @@ class TaskManager:
         # do not allow procrastination of determining task priority.
         # if a task is added, then the user must determine its
         # priority immediately.
-                
         print(f"adding task: {description}")
         t = Task(description)
         self.tasks.insert(t)
 
+    # def add_deadline_property(self):
+    #     for t in self.tasks:
+    #         t.add_deadline_property()
+    #     for t in self.finished_tasks:
+    #         t.add_deadline_property()
+        
     def set_task_description(self, task_num, new_desc):
         self.tasks[task_num].set_description(new_desc)
+
+    def set_task_deadline(self, task_num, date):
+        task = self.tasks[task_num]
+        self.tasks[task_num].set_deadline(date)
         
     def add_full_task(self, task):
         self.tasks.insert(task)
