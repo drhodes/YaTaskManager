@@ -3,7 +3,6 @@ docstring
 """
 import datetime
 import json
-from deadline import Deadline
 
 class Task():
     """A task is a unit of human work!"""

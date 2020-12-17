@@ -69,7 +69,6 @@ class AddDeadline(CommandI):
 
     def run(self, task_mgr):
         try:
-            # task_mgr.add_deadline_property()
             task_number = get_task_number()
             date = tk_cal.get_date()
             if date:
@@ -184,9 +183,22 @@ class TagTask(CommandI):
     def run(self, task_mgr):
         task_num = get_task_number()
         task = task_mgr.get_task(task_num)
-        tag = ask(f"enter the tag for {task}")
+        tag = ask(f"enter the tag for '{task}'")
         if tag: task.add_tag(tag)
 
+class RemoveTag(CommandI):
+    def name(self): return "rmt"
+    def desc(self): return "remove a tag from a task"
+
+    def run(self, task_mgr):
+        try:
+            task_num = get_task_number()
+            tag = ask("enter a tag to remove")
+            task_mgr.remove_task_tag(task_num, tag)
+        except ValueError as e:
+            print("couldn't remove tag:{tag}, because {e}")
+            
+        
 class ToCSV(CommandI):
     def name(self): return "csv"
     def desc(self): return "output tasks as CSV format"

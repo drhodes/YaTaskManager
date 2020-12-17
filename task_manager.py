@@ -51,12 +51,6 @@ class TaskManager:
         print(f"adding task: {description}")
         t = Task(description)
         self.tasks.insert(t)
-
-    # def add_deadline_property(self):
-    #     for t in self.tasks:
-    #         t.add_deadline_property()
-    #     for t in self.finished_tasks:
-    #         t.add_deadline_property()
         
     def set_task_description(self, task_num, new_desc):
         self.tasks[task_num].set_description(new_desc)
@@ -96,7 +90,6 @@ class TaskManager:
     def finish_task(self, idx):
         task = self.remove_task(idx)
         self.finished_tasks.append(task)
-        self.show_finished_tasks()
         
     def show_finished_tasks(self):
         print("---------------------------------")
