@@ -34,8 +34,11 @@ class REPL:
             try:
                 now = datetime.datetime.now()
                 print(f"{now.month}/{now.day}, {now.hour}:{now.minute}")
-                cmd = input(">> ")
+                cmd = input(">> ").strip()
+                if cmd == "": continue
+                
                 self.cmdr.run(cmd, self.tmgr)
+                self.tmgr.save_to_disk()
                 print()
             except UnknownCommand as e:
                 print(f"!! {e}")
