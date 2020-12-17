@@ -207,6 +207,18 @@ class Swap(CommandI):
         except ValueError:
             print("Couldn't swap tasks")
 
+class Top(CommandI):
+    def name(self): return "top"
+    def desc(self): return "send task to top of priority"
+
+    def run(self, task_mgr):
+        try:
+            tasknum1 = get_task_number()
+            tasknum2 = 0
+            task_mgr.swap(tasknum1, tasknum2)
+        except ValueError:
+            print("send task to front of queue")
+            
 # ------------------------------------------------------------------
 class Commander:
     def __init__(self):
@@ -227,6 +239,7 @@ class Commander:
             ReprioritizeTask(),
             Ressurect(),
             Swap(),
+            Top(),
             TagTask(),
             ToCSV(),
             Quit(),
