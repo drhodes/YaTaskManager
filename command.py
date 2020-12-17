@@ -29,13 +29,12 @@ def ask(msg):
     return get_input()
 
 def get_task_number():
-    task_num = ask("enter task number")
     try:
-        task_num = int(task_num)
+        task_num = ask("enter task number")
+        return int(task_num)
     except ValueError as e:
         print(f"Sorry, couldn't parse task_number: {e}")
         raise e
-    return task_num
 
 # ------------------------------------------------------------------
 # These are the commands available to users. 
