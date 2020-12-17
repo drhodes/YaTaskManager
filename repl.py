@@ -33,7 +33,7 @@ class REPL:
         while 1:
             try:
                 now = datetime.datetime.now()
-                print(f"{now.month}/{now.day}, {now.hour}:{now.minute}")
+                print(now.strftime("%m/%d, %H:%M"))
                 cmd = input(">> ").strip()
                 if cmd == "": continue
                 
