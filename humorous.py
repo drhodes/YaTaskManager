@@ -1,6 +1,6 @@
 messages = [
     "To infinity and beyond!",
-    "Failure to plan on your part does not consitute an emergency on mine.",
+    "Failure to plan on your part does not constitute an emergency on mine.",
     "The early bird gets the worm",
     "There's only two options: make progress or make excuses",
     "If you find yourself in a hole, stop digging",
