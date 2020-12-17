@@ -22,6 +22,10 @@ class Task():
 
     def set_duration(self, dur):
         self.duration = dur
+
+    def remove_tag(self, tag):
+        if tag in self.tags:
+            self.tags.remove(tag)
         
     def set_deadline(self, date):
         # change these prints to calls to a logger.

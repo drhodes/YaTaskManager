@@ -67,6 +67,9 @@ class TaskManager:
         
     def remove_task(self, idx):
         return self.tasks.remove(idx)
+
+    def remove_task_tag(self, task_num, tag):
+        self.tasks[task_num].remove_tag(tag)
     
     def remove_finished_task(self, idx):
         return self.finished_tasks.pop(idx)
