@@ -32,14 +32,16 @@ class TaskManager:
     
     def load_from_disk(self):
         try:
-            self.tasks, self.finished_tasks = pickle.load(open(self.pickle_path(),'rb'))
+            with open(self.pickle_path(),'rb') as f:
+                self.tasks, self.finished_tasks = pickle.load(f)
         except FileNotFoundError as e:
             pass # ok, first run.
         
     def save_to_disk(self):
         obj = (self.tasks, self.finished_tasks)
-        pickle.dump(obj, open(self.pickle_path(), 'wb'))
-
+        with open(self.pickle_path(), 'wb') as outfile:
+            pickle.dump(obj, outfile)
+        
     def run(self, cmd):
         print(f"TaskManager is doing {cmd}")
         return True
@@ -78,17 +80,21 @@ class TaskManager:
         return self.tasks[idx]
     
     def show_all_tasks(self):
-        for n, t in enumerate(self.tasks):
-            print(f"({n}):  {t}")
+        self.display_list(self.tasks)
 
     def show_all_finished_tasks(self):
-        for n, t in enumerate(self.finished_tasks):
-            print(f"({n}):  {t}")
+        print("FINISHED TASKS")
+        self.display_list(self.finished_tasks)
+
+    def display_list(self, xs):
+        for n, t in enumerate(xs):
+            print(f"{n:>3} ┈ {t}")
             
     def list_tasks_with_tag(self, tag):
+        print(f"TASKS WITH TAG: {tag}")
         for n, t in enumerate(self.tasks):
             if tag in t.tags:
-                print(f"({n}):  {t}")
+                print(f"{n:>3} ┈ {t}")
             
     def finish_task(self, idx):
         task = self.remove_task(idx)
@@ -104,8 +110,8 @@ class TaskManager:
         try:
             self.tasks[idx].set_duration(duration)
         except IndexError:
-            print(f"there is no task with that number: {idx}")        
-            
+            print(f"there is no task with that number: {idx}")
+
     def quit(self):
         print("todo: cleanup")
         self.save_to_disk()

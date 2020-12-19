@@ -53,7 +53,11 @@ class Task():
         return json.dumps(self)
     
     def __repr__(self):
-        s = self.description
+        s = ""
+        if len(self.description) > 45:
+            s = self.description[:45] + "…"
+        else:
+            s = self.description            
         if self.duration:
             s += f"({self.duration})"
         if self.deadline:

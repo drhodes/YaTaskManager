@@ -16,15 +16,11 @@ class REPL:
         self.setup_signal_handlers()
         
     def setup_signal_handlers(self):
-        # handle quits to ensure db is intact.
-        
         def quit(*args):
             print("\n\n")
             print(random.choice(humorous.messages))
-            print("todo: save state")
             print("")
             sys.exit(0)
-            
         signal.signal(signal.SIGHUP, quit)
         signal.signal(signal.SIGINT, quit)
         signal.signal(signal.SIGTERM, quit)
@@ -35,8 +31,8 @@ class REPL:
                 now = datetime.datetime.now()
                 print(now.strftime("%m/%d, %H:%M"))
                 cmd = input(">> ").strip()
-                if cmd == "": continue
-                
+                if cmd == "": continue                
+                self.tmgr.load_from_disk()
                 self.cmdr.run(cmd, self.tmgr)
                 self.tmgr.save_to_disk()
                 print()
